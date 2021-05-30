@@ -15,7 +15,7 @@ import ru.vakulina.java.core.home_work2.MyArraySizeException;
 public class MainClass {
     public static void main(String[] args) {
         String[][] arr = {
-                {"1", "1", "1", "1"},
+                {"1", "a", "1", "1"},
                 {"2", "2", "2", "2"},
                 {"3", "3", "3", "3"},
                 {"4", "4", "4", "4"},
