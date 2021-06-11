@@ -1,14 +1,17 @@
-package ru.vakulina.java.core.home_work7.model;
+package ru.vakulina.java.core.home_work7_8.model;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import ru.vakulina.java.core.home_work7.GlobalState;
+import ru.vakulina.java.core.home_work7_8.GlobalState;
+import ru.vakulina.java.core.home_work7_8.entity.WeatherObject;
 
 import java.io.IOException;
-import java.util.Objects;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AccuWeatherProvider implements IWeatherProvider {
 
@@ -21,7 +24,7 @@ public class AccuWeatherProvider implements IWeatherProvider {
 
 
     @Override
-    public String getWeather(Period period) {
+    public List<WeatherObject> getWeather(Period period) {
         String key = detectCityKeyByName();
         if (period.equals(Period.NOW)) {
             HttpUrl currentUrl = new HttpUrl.Builder()
@@ -39,22 +42,11 @@ public class AccuWeatherProvider implements IWeatherProvider {
                     .addHeader("accept", "application/json")
                     .url(currentUrl)
                     .build();
-            //Response response = null;
+
 
             try {
-               Response response = okHttpClient.newCall(request).execute();
-
-                String jsonWeather = response.body().string();
-                if (objectMapper.readTree(jsonWeather).size()>0) {
-                    String data = objectMapper.readTree(jsonWeather).get(0).at("/EffectiveDate").asText();
-                    String text = objectMapper.readTree(jsonWeather).get(0).at("/Category").asText();
-                    String temperature = objectMapper.readTree(jsonWeather).get(0).at("/Temperature").asText();
-                    System.out.printf("На дату %s ожидается %s, температура %s\n", data, text, temperature);
-
-                }
-
-
-
+                Response response = okHttpClient.newCall(request).execute();
+                System.out.println(response.body().string());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -83,8 +75,9 @@ public class AccuWeatherProvider implements IWeatherProvider {
             }
         }
 
-        return key;
+        return new ArrayList<WeatherObject>();
     }
+
 
 
     private String detectCityKeyByName() {

@@ -1,8 +1,8 @@
-package ru.vakulina.java.core.home_work7.view;
+package ru.vakulina.java.core.home_work7_8.view;
 
-import ru.vakulina.java.core.home_work7.GlobalState;
-import ru.vakulina.java.core.home_work7.controller.IWeatherController;
-import ru.vakulina.java.core.home_work7.controller.WeatherController;
+import ru.vakulina.java.core.home_work7_8.GlobalState;
+import ru.vakulina.java.core.home_work7_8.controller.IWeatherController;
+import ru.vakulina.java.core.home_work7_8.controller.WeatherController;
 
 import java.util.Scanner;
 
@@ -20,7 +20,7 @@ public class UserInterface implements IUserInterface {
             checkIsExit(userInput);
             GlobalState.getInstance().setSelectedCity(userInput);
 
-            System.out.println("Введите команду: \n1. - погода на 1 день\n2. - погода на 5 дней");
+            System.out.println("Введите команду: \n1. - погода на 1 день\n2. - погода на 5 дней\n3. - все из базы данных");
             String command = scanner.nextLine();
 
             try {

@@ -1,12 +1,10 @@
-package ru.vakulina.java.core.home_work7.controller;
+package ru.vakulina.java.core.home_work7_8.controller;
 
-import ru.vakulina.java.core.home_work7.model.AccuWeatherProvider;
-import ru.vakulina.java.core.home_work7.model.IWeatherProvider;
-import ru.vakulina.java.core.home_work7.model.Period;
+import ru.vakulina.java.core.home_work7_8.model.*;
 
 public class WeatherController implements IWeatherController {
 
-    private IWeatherProvider weatherProvider = new AccuWeatherProvider();
+    private IWeatherRepository weatherRepository = new WeatherRepository();
 
     @Override
     public void onUserInput(int command) {
@@ -18,6 +16,8 @@ public class WeatherController implements IWeatherController {
             case 2:
                 getFiveDays();
                 break;
+            case 3:
+                getAllFromDb();
             default:
                 System.out.println("НЕТ ТАКОЙ КОМАНДЫ!");
                 System.exit(1);
@@ -25,9 +25,13 @@ public class WeatherController implements IWeatherController {
     }
 
     private void getCurrentWeather() {
-        weatherProvider.getWeather(Period.NOW);
+
+        weatherRepository.fetchWeatherFromApi(Period.NOW);
     }
     private void getFiveDays() {
-        weatherProvider.getWeather(Period.FIVE_DAYS);
+        weatherRepository.fetchWeatherFromApi(Period.FIVE_DAYS);
+    }
+    private void getAllFromDb() {
+        weatherRepository.readWeatherFromDb();
     }
 }
